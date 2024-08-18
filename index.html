@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Periodic Pal</title>
+    <link rel="icon" href="logo.png" type="image/x-icon" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.9.0/css/all.css">
+    <link rel="stylesheet" href="style.css">
+    <script src="main.js" defer></script>
+    <script src="https://kit.fontawesome.com/5ba578252d.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <header>
+        <h1 class="Title"><big>Periodic Pal</big></h1>
+    </header>
+    <div class="container">
+        <a class="resetButton" href="http://127.0.0.1:5500/">
+            <button>Reset</button>
+        </a>
+    </div>
+    <section class="draggable-elements">
+        <img class="fa-solid fa-h draggable" draggable="true" src="hydroicon.png"  id="Hydrogen">
+    </section>
+    
+    <section class="droppable-elements">
+        <div class="droppable1" data-draggable-id="Hydrogen" ondrop="handleDrop(event)" ondragover="allowDrop(event)">
+            <span><img src="nitrogen.png" alt="Photo of Nitrogen Element" height="200" width="200"></span>
+        </div>
+
+        <div class="droppable2" data-draggable-id="Hydrogen" ondrop="handleDrop(event)" ondragover="allowDrop(event)">
+            <span><img src="fluorine.png" alt="Photo of Fluorine Element" height="200" width="200"></span>
+        </div>
+
+        <div class="droppable3" data-draggable-id="Hydrogen" ondrop="handleDrop(event)" ondragover="allowDrop(event)">
+            <span><img src="chlorine.png" alt="Photo of Chlorine Element" height="200" width="200"></span>
+        </div>
+
+        <div class="droppable4" data-draggable-id="Hydrogen" ondrop="handleDrop(event)" ondragover="allowDrop(event)">
+            <span><img src="hydrogen.png" alt="Photo of Hydrogen Element" height="200" width="200"></span>
+        </div>
+    </section>
+    
+
+    <script>
+        let draggedElementId = null;
+
+        function allowDrop(event) {
+            event.preventDefault();
+        }
+
+        document.querySelectorAll('.draggable').forEach(element => {
+            element.addEventListener('dragstart', function(event) {
+                draggedElementId = event.target.id;
+            });
+        });
+
+        function handleDrop(event) {
+            event.preventDefault();
+            const droppableElementId = event.currentTarget.dataset.draggableId;
+
+            console.log('Dragged Element ID:', draggedElementId);
+            console.log('Droppable Element ID:', droppableElementId);
+
+            if (draggedElementId && droppableElementId) {
+                generateCompound(draggedElementId, droppableElementId);
+            }
+        }
+
+        /*async function generateCompound(compound1, compound2) {
+            try {
+                const response = await fetch('http://127.0.0.1:5000/search', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ compound1, compound2 }),
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                const data = await response.json();
+
+                if (data.error) {
+                    alert(data.error);
+                } else {
+                    document.getElementById('newcompound').textContent = data.newcompound || 'N/A';
+                    document.getElementById('reactiontype').textContent = data.reactiontype || 'N/A';
+                    document.getElementById('description').textContent = data.description || 'N/A';
+                }
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }*/
+    </script>
+</body>
+</html>
